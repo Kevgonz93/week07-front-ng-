@@ -1,0 +1,76 @@
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { RepoClubsService } from './repo.clubs.service';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+
+export type UserPayload = {
+  id: string;
+  role: string;
+} & JwtPayload;
+
+type LoginState = 'idle' | 'logging' | 'logged' | 'error';
+
+export type State = {
+  loginState: LoginState;
+  token?: string | null;
+  currentPayload: UserPayload | null;
+  currentUser: unknown | null;
+};
+
+const initialState: State = {
+  loginState: 'idle',
+  token: null,
+  currentPayload: null,
+  currentUser: null,
+};
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StateService {
+  private state$ = new BehaviorSubject<State>(initialState);
+  private repo = inject(RepoClubsService);
+
+  constructor() {}
+
+  getState(): Observable<State> {
+    return this.state$.asObservable();
+  }
+
+  getToken = (): string | null => this.state$.value.token;
+
+  setLoginStart(loginState: LoginState): void {
+    this.state$.next({ ...this.state$.value, loginState });
+  }
+
+  setLogin(token: string) {
+    const currentPayload = jwtDecode(token) as UserPayload;
+    localStorage.setItem('W07', JSON.stringify({ token }));
+    this.repo.getById;
+
+    localStorage.setItem('W07', JSON.stringify({ token }));
+
+    this.state$.next({
+      ...this.state$.value,
+      loginState: 'logged',
+      token,
+      currentPayload,
+    });
+  }
+
+  setLogout() {
+    localStorage.removeItem('W07');
+    this.state$.next({
+      ...this.state$.value,
+      loginState: 'idle',
+      token: null,
+      currentUser: null,
+    });
+  }
+
+  loadClubs() {
+    this.repo.getClubs(this.state$.value.token!).subscribe((Club) => {
+      console.log('Articles');
+    });
+  }
+}
