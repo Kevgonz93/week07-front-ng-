@@ -8,10 +8,8 @@ import { StateService } from './services/state.service';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent],
   template: `
-    <app- home>
-      <app-header />
-      <router-outlet />
-    </app->
+    <app-header />
+    <router-outlet />
   `,
   styles: ``,
 })

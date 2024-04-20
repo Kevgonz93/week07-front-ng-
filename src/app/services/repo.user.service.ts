@@ -12,7 +12,7 @@ export class RepoUserService {
 
   login(_data: UserLoginDto) {
     const data = {
-      name: _data.username,
+      name: _data.name,
       password: _data.password,
     };
     return this.httpClient.post<{ token: string }>(this.url + '/login', data);

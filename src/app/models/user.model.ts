@@ -1,4 +1,7 @@
 export type UserLoginDto = {
-  username: 'string';
-  password: 'string';
+  name: string;
+  email: string;
+  password: string;
+  friend?: boolean;
+  enemy?: boolean;
 };

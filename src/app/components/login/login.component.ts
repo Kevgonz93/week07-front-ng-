@@ -7,14 +7,14 @@ import { StateService } from '../../services/state.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, StateService],
+  imports: [ReactiveFormsModule],
   template: `
-    <form [formGroup]="formLogin" []>
+    <form [formGroup]="formLogin" (ngSubmit)="submit()">
       <label for="username">Username</label>
       <input id="username" type="text" formControlName="username" />
       <label for="password">password</label>
       <input id="password" type="password" formControlName="password" />
-      <button type="submit" [disable]="formLoging.invalid">Submit</button>
+      <button type="submit" [disabled]="formLogin.invalid">Submit</button>
     </form>
   `,
   styles: ``,

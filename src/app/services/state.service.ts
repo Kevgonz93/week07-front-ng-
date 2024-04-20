@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RepoClubsService } from './repo.clubs.service';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { RepoUserService } from './repo.user.service';
 
 export type UserPayload = {
   id: string;
@@ -12,7 +13,7 @@ type LoginState = 'idle' | 'logging' | 'logged' | 'error';
 
 export type State = {
   loginState: LoginState;
-  token?: string | null;
+  token: string | null;
   currentPayload: UserPayload | null;
   currentUser: unknown | null;
 };
@@ -29,7 +30,8 @@ const initialState: State = {
 })
 export class StateService {
   private state$ = new BehaviorSubject<State>(initialState);
-  private repo = inject(RepoClubsService);
+  private repoClubs = inject(RepoClubsService);
+  private repoUsers = inject(RepoUserService);
 
   constructor() {}
 
@@ -46,7 +48,7 @@ export class StateService {
   setLogin(token: string) {
     const currentPayload = jwtDecode(token) as UserPayload;
     localStorage.setItem('W07', JSON.stringify({ token }));
-    this.repo.getById;
+    this.repoUsers.getById;
 
     localStorage.setItem('W07', JSON.stringify({ token }));
 
@@ -69,8 +71,8 @@ export class StateService {
   }
 
   loadClubs() {
-    this.repo.getClubs(this.state$.value.token!).subscribe((Club) => {
-      console.log('Articles');
+    this.repoClubs.getClubs().subscribe((Club) => {
+      console.log('Club');
     });
   }
 }

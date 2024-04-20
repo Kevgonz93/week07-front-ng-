@@ -10,17 +10,17 @@ import { LoginComponent } from '../login/login.component';
     <h2>Home</h2>
     @switch(state.loginState){ @case ('idle'){
     <p>Esperando al usuario</p>
-    } @case('loggin'){
+    } @case('logging'){
     <app-login />
     } @case('logged'){
-    <p>Welcome {{ state.currentUser.id }}</p>
+    <p>Welcome {{ state.currentUser }}</p>
     } @case ('error'){
     <p>Error de acceso</p>
     }}
   `,
   styles: ``,
 })
-export class HomeComponent implements OnInit {
+export default class HomeComponent implements OnInit {
   stateService = inject(StateService);
   state!: State;
 
