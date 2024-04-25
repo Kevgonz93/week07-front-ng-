@@ -5,3 +5,8 @@ export type UserLoginDto = {
   friend?: boolean;
   enemy?: boolean;
 };
+
+export type UserRegisterDto = {
+  name: string;
+  password: string;
+};

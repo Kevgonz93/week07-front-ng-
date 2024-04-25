@@ -13,7 +13,9 @@ import { AsyncPipe } from '@angular/common';
         @if((stateService.getState() | async)!.loginState === 'logged'){
         <button (click)="onClickLogout()">Logout</button>
         <button (click)="onClickClubs()">Clubs</button>
-        } @else{<button (click)="onClickLogin()">Login</button>}
+        } @else{<button (click)="onClickLogin()">Login</button>
+        <button (click)="onClickRegister()">Register</button>
+        }
       </h1>
     </header>
   `,
@@ -32,5 +34,9 @@ export class HeaderComponent {
 
   onClickClubs() {
     this.stateService.loadClubs();
+  }
+
+  onClickRegister() {
+    this.stateService.setRegisterStart('register');
   }
 }
