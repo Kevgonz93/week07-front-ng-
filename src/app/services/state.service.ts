@@ -3,13 +3,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { RepoClubsService } from './repo.clubs.service';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { RepoUserService } from './repo.user.service';
+import { UserRegisterDto } from '../models/user.model';
 
 export type UserPayload = {
   id: string;
   role: string;
 } & JwtPayload;
 
-type LoginState = 'idle' | 'logging' | 'logged' | 'error';
+type LoginState = 'idle' | 'register' | 'logging' | 'logged' | 'error';
 
 export type State = {
   loginState: LoginState;
@@ -74,5 +75,16 @@ export class StateService {
     this.repoClubs.getClubs().subscribe((Club) => {
       console.log('Club');
     });
+  }
+
+  setRegister() {
+    this.state$.next({
+      ...this.state$.value,
+      loginState: 'register',
+    });
+  }
+
+  setRegisterStart(loginState: LoginState): void {
+    this.state$.next({ ...this.state$.value, loginState });
   }
 }

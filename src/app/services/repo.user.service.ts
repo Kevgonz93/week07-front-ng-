@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { UserLoginDto } from '../models/user.model';
+import { UserLoginDto, UserRegisterDto } from '../models/user.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -20,5 +20,13 @@ export class RepoUserService {
 
   getById(id: string) {
     return this.httpClient.get;
+  }
+
+  register(_data: UserRegisterDto) {
+    const data = {
+      name: _data.name,
+      password: _data.password,
+    };
+    return this.httpClient.post.bind(_data);
   }
 }

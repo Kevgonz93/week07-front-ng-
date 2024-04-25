@@ -1,17 +1,22 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { State, StateService } from '../../services/state.service';
 import { LoginComponent } from '../login/login.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [LoginComponent],
   template: `
-    <h2>Home</h2>
-    @switch(state.loginState){ @case ('idle'){
+    @if (state.loginState === 'logging') {
+    <h2>Home - Inicia sesión</h2>
+    } @else if(state.loginState === 'register'){
+    <h2>Home - Crea nuevo usuario</h2>
+    } @switch(state.loginState){ @case ('idle'){
     <p>Esperando al usuario</p>
     } @case('logging'){
     <app-login />
+    } @case('register'){
+    <app-register />
     } @case('logged'){
     <p>Welcome {{ state.currentUser }}</p>
     } @case ('error'){
@@ -19,6 +24,7 @@ import { LoginComponent } from '../login/login.component';
     }}
   `,
   styles: ``,
+  imports: [LoginComponent, RegisterComponent],
 })
 export default class HomeComponent implements OnInit {
   stateService = inject(StateService);
